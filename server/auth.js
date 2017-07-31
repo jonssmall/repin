@@ -1,8 +1,7 @@
 'use strict';
 
 const githubStrategy = require('passport-github2').Strategy;
-const sql = require('./sql');
-
+const db = require('./sql');
 const configAuth = {
 	'githubAuth': {
 		'clientID': process.env.GITHUB_KEY,
@@ -11,26 +10,38 @@ const configAuth = {
 	}
 };
 
-module.exports = function (passport) {
-	passport.serializeUser(function (user, done) {    
-		done(null, user);
+module.exports = (passport) => {
+	passport.serializeUser((user, done) => {         
+		done(null, user.github_id);
 	});
-
-	passport.deserializeUser(function (obj, done) {
-    // TODO: Stash user in DB 
-		// User.findById(id, function (err, user) {
-		// 	done(err, user);
-    // });
-    done(null, obj)
+	passport.deserializeUser((id, done) => {    
+    const getUserQ = `SELECT * FROM users WHERE github_id=${id}`; 
+    db.query(getUserQ, (err, res) => {
+      done(err, res[0]);
+    })    
 	});
-
 	passport.use(new githubStrategy({
 		clientID: configAuth.githubAuth.clientID,
 		clientSecret: configAuth.githubAuth.clientSecret,
 		callbackURL: configAuth.githubAuth.callbackURL
-	},
-	function (token, refreshToken, profile, done) {
-    //TODO: Persist user in DB and/or return user info
-		done(null, profile)
+	}, (token, refreshToken, profile, done) => {            
+    const getUserQ = `SELECT * FROM users WHERE github_id=${profile.id}`;
+    db.query(getUserQ, (err, res) => {
+      if (err) return done(err); 
+      if (res.length > 0) { //user exists        
+        return done(null, res[0]);
+      } else {
+        const newUser  = {
+          github_id: profile._json.id, 
+          username: profile.username, 
+          profile_pic_url: profile._json.avatar_url
+        };
+        const newUserQ = 'INSERT INTO users SET ?'
+        db.query(newUserQ, newUser, (err, res) => {
+          if (err) throw err;
+          return done(null, newUser);
+        })
+      }
+    });    
 	}));
 };

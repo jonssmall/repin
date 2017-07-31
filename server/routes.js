@@ -16,14 +16,13 @@ module.exports = (app, passport) => {
 			<!DOCTYPE html>
 			<html lang="en">
 			<head>
-    		<title>reBooks</title>
+    		<title>rePin</title>
     		<meta charset="UTF-8">	
-    		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-				<link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" />
-				<link rel="stylesheet" href="/app/style/side-menu.css">
+    		<meta name="viewport" content="width=device-width, initial-scale=1.0">								
 			</head>
 			<body>
-    		Hello.
+        Hello.
+        <a href="/auth/github">Login</a>        
 				<script type="text/javascript" charset="utf-8">
 					window.USER = ${JSON.stringify(req.user)};					
 				</script>    		

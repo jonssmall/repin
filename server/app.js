@@ -15,7 +15,7 @@ app.use('/client', express.static(process.cwd() + '/client'));
 app.use(router);
 
 app.use(session({
-	secret: 'secretGram',
+	secret: 'secretPin',
 	resave: false,
 	saveUninitialized: true
 }));
