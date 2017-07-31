@@ -1,15 +1,16 @@
 'use strict';
-
+/*
+  TODO:
+  1. Abstract "Get current user" query into 1 function
+  2. Use promises instead of callbacks.
+*/
 const githubStrategy = require('passport-github2').Strategy;
 const db = require('./sql');
-const configAuth = {
-	'githubAuth': {
-		'clientID': process.env.GITHUB_KEY,
-		'clientSecret': process.env.GITHUB_SECRET,
-		'callbackURL': process.env.APP_URL + 'auth/github/callback'
-	}
+const authConfig = {
+  clientID: process.env.GITHUB_KEY,
+  clientSecret: process.env.GITHUB_SECRET,
+  callbackURL: `${process.env.APP_URL}auth/github/callback`
 };
-
 module.exports = (passport) => {
 	passport.serializeUser((user, done) => {         
 		done(null, user.github_id);
@@ -20,12 +21,8 @@ module.exports = (passport) => {
       done(err, res[0]);
     })    
 	});
-	passport.use(new githubStrategy({
-		clientID: configAuth.githubAuth.clientID,
-		clientSecret: configAuth.githubAuth.clientSecret,
-		callbackURL: configAuth.githubAuth.callbackURL
-	}, (token, refreshToken, profile, done) => {            
-    const getUserQ = `SELECT * FROM users WHERE github_id=${profile.id}`;
+	passport.use(new githubStrategy(authConfig, (token, refreshToken, profile, done) => {            
+    const getUserQ = `SELECT * FROM users WHERE github_id=${profile.id}`;    
     db.query(getUserQ, (err, res) => {
       if (err) return done(err); 
       if (res.length > 0) { //user exists        
