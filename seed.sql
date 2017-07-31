@@ -28,3 +28,13 @@ CREATE TABLE likes
   FOREIGN KEY(post_id) REFERENCES posts(id),
   PRIMARY KEY(user_id, post_id)
 );
+
+-- EXAMPLE USAGE - PUT YOUR OWN GITHUB ID
+-- insert into posts (owner_id, picture_url, description) values
+-- (ID, "https://www.pexels.com/photo/calm-conifers-countryside-dawn-449460/", "A nice lake.");
+
+-- insert into posts (owner_id, picture_url, description) values
+-- (ID, "https://www.pexels.com/photo/adventure-beach-coast-daylight-457044/", "Sandy Beach.");
+
+-- insert into posts (owner_id, picture_url, description) values
+-- (ID, "https://www.pexels.com/photo/brown-and-white-lizard-standing-on-brown-surface-87767/", "Cool gecko.");

@@ -25,7 +25,8 @@ module.exports = (app, passport) => {
         <a href="/auth/github">Login</a>        
 				<script type="text/javascript" charset="utf-8">
 					window.USER = ${JSON.stringify(req.user)};					
-				</script>    		
+        </script>
+        <script type="text/javascript" charset="utf-8" src="/client/app.js"></script>
 			</body>
 			</html>
 			`;
@@ -40,8 +41,7 @@ module.exports = (app, passport) => {
         
 	app.route('/auth/github')
 		.get((req, res) => {                  
-      passport.authenticate('github')(req, res);
-      // TODO: test if passport.authenticate('github'); works for extra cool functional programming
+      passport.authenticate('github')(req, res);      
 		});                    
 
   app.route('/auth/github/callback')
