@@ -1,4 +1,5 @@
 'use strict';
+const api = require('./api');
 module.exports = (app, passport) => {	
 	app.route('/')
 		.get((req, res) => {			
@@ -21,9 +22,7 @@ module.exports = (app, passport) => {
 			})(req, res, next);
 		});	
 	app.route('/posts')
-		.get(isLoggedIn, (req, res) => {
-      res.status(200).send("Good job.");
-    }) //GET all of the posts.
+		.get(api.getPosts) //GET all of the posts.
   // 	.post(isLoggedIn, doSomething); POST a new post.    
   
   // app.route('/posts/:id')		
