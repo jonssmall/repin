@@ -22,18 +22,15 @@ module.exports = (app, passport) => {
 			})(req, res, next);
 		});	
 	app.route('/posts')
-		.get(api.getPosts) //GET all of the posts.
-  // 	.post(isLoggedIn, doSomething); POST a new post.    
-  
-  // app.route('/posts/:id')		
-  //   .delete(isLoggedIn, doSomething); DELETE user's own post
-  //   .put(isLoggedIn, doSomething); PUT a like OR remove a like on a post.
-    
-  // app.route('/users/:user/posts')
-  //   .get(doSomething); GET all of a user's posts.
+		.get(api.getPosts)
+  	.post(isLoggedIn, api.newPost);  
+  app.route('/posts/:id')		
+    .delete(isLoggedIn, api.deletePost)
+    .put(isLoggedIn, api.toggleLike); // PUT a like OR remove a like on a post.    
+  app.route('/users/:user/posts')
+    .get(api.getUserPosts);
 
   function isLoggedIn (req, res, next) {		
     return req.isAuthenticated() ? next() : res.status('401').send('Unauthorized');
-  };
-  
+  };  
 };
