@@ -17,7 +17,7 @@ module.exports = (passport) => {
 	});
 	passport.deserializeUser((id, done) => {    
     const getUserQ = `SELECT * FROM users WHERE github_id=${id}`; 
-    db.query(getUserQ, (err, res) => {
+    db.query(getUserQ, (err, res) => {      
       done(err, res[0]);
     })    
 	});

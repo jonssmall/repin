@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').load();
 const express = require('express');
 const routes = require('./routes');
 const bodyParser = require('body-parser');
@@ -6,7 +7,6 @@ const passport = require('passport');
 const session = require('express-session');
 const app = express();
 const router = express.Router({mergeParams: true});
-require('dotenv').load();
 require('./auth')(passport);
 app.use(bodyParser.json());
 app.use('/client', express.static(process.cwd() + '/client'));
