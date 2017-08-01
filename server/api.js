@@ -10,17 +10,17 @@ module.exports = {
   },
   newPost: (req, resp) => {
     const post  = {
-      owner_id: req.user._id,
+      owner_id: req.user.github_id,
       picture_url: req.body.picUrl,
       description: req.body.description
-    };    
-    db.query('INSERT INTO users SET ?', post, (err, res) => {
+    };      
+    db.query('INSERT INTO posts SET ?', post, (err, res) => {
       if (err) throw err;
       resp.json(res);
-    });
+    });    
   },
   deletePost: (req, resp) => {
-    const q = `DELETE FROM posts WHERE owner_id=${req.user._id} 
+    const q = `DELETE FROM posts WHERE owner_id=${req.user.github_id} 
                AND post_id=${req.body.postId}`;
     db.query(q, (err, res) => {
       if (err) throw err;
@@ -35,7 +35,7 @@ module.exports = {
     });
   },
   toggleLike: (req, res) => { // Add or remove a like
-    const q = `DELETE FROM likes WHERE user_id=${req.user._id} 
+    const q = `DELETE FROM likes WHERE user_id=${req.user.github_id} 
                AND post_id=${req.body.postId}`;
     db.query(q, (err, res) => {
       if (err) throw err;
@@ -48,7 +48,7 @@ module.exports = {
           user_id: req.user._id,
           post_id: req.body.postId
         };
-        db.query('INSERT INTO users SET ?', newLike, (err, res) => {
+        db.query('INSERT INTO likes SET ?', newLike, (err, res) => {
           if (err) throw err;
           resp.json(res);
         });

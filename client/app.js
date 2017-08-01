@@ -1,7 +1,8 @@
-const ajax = (verb, url, successCallback) => {
+const ajax = (verb, url, body, successCallback) => {
   const xhr = new XMLHttpRequest();
   xhr.open(verb, `${url}`);
-  xhr.send(null);
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  xhr.send(JSON.stringify(body));
 
   xhr.onreadystatechange = () => {
     const DONE = 4;
@@ -16,6 +17,15 @@ const ajax = (verb, url, successCallback) => {
   };
 }
 
-ajax("GET", "/posts/", (res) => {
-  console.log(res);
-});
+const client = {
+  getPosts: () => {
+    ajax("GET", "/posts/", null, (res) => {
+      console.log(res);
+    });
+  },
+  newPost: (picUrl, description) => {
+    ajax("POST", "/posts/", {picUrl, description}, (res) => {
+      console.log(res);
+    });
+  }
+}
