@@ -6,12 +6,10 @@ class PostsContainer extends React.Component {
     super(props);
     this.state = {posts: []};
   };
-
   componentDidMount() {
-    service.getPosts();
-  };
-  
-  render() {     
+    service.getPosts(posts => this.setState({posts}));    
+  };  
+  render() {    
     return (
       <div>
         Hello Posts.
@@ -20,7 +18,6 @@ class PostsContainer extends React.Component {
   };
 };
 
-//TODO: Abstract out to share with MyBooks component. Might have to compose delete vs. new request.
 function PostsList(props) {
   
 };

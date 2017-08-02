@@ -7,5 +7,4 @@ ReactDOM.render(
   <Routes />,  
   document.getElementById('app')
 );
-
 //TODO: webpack is almost 1mb!!!

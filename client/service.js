@@ -1,13 +1,5 @@
 import {ajax} from './ajax';
 export default {
-  getPosts: () => {
-    ajax("GET", "/posts/", null, (res) => {
-      console.log(res);
-    });
-  },
-  newPost: (picUrl, description) => {
-    ajax("POST", "/posts/", {picUrl, description}, (res) => {
-      console.log(res);
-    });
-  }
+  getPosts: (cb) => ajax("GET", "/posts/", null, res => cb(res)),
+  newPost: (postObj, cb) => ajax("POST", "/posts/", postObj, res => cb(res))
 };
