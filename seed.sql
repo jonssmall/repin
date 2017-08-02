@@ -38,3 +38,12 @@ CREATE TABLE likes
 
 -- insert into posts (owner_id, picture_url, description) values
 -- (ID, "https://www.pexels.com/photo/brown-and-white-lizard-standing-on-brown-surface-87767/", "Cool gecko.");
+
+
+
+-- select id, picture_url, description, username as author, profile_pic_url  from posts
+-- inner join users on posts.owner_id = users.github_id
+
+-- select id, picture_url, description, (select count(*) from likes where post_id = posts.id) as likes,
+-- username as author, profile_pic_url  from posts
+-- inner join users on posts.owner_id = users.github_id;

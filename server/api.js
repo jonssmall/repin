@@ -2,7 +2,10 @@
 const db = require('./sql');
 module.exports = {
   getPosts: (req, resp) => {
-    const q = 'SELECT * FROM posts';
+    const q = `SELECT id, picture_url, description, 
+      (SELECT count(*) FROM likes WHERE post_id = posts.id) AS likes,
+      username AS author, profile_pic_url FROM posts
+      INNER JOIN users ON posts.owner_id = users.github_id`;
     db.query(q, (err, res) => {
       if (err) throw err;
       resp.json(res);
@@ -21,7 +24,7 @@ module.exports = {
   },
   deletePost: (req, resp) => {
     const q = `DELETE FROM posts WHERE owner_id=${req.user.github_id} 
-               AND post_id=${req.body.postId}`;
+      AND post_id=${req.body.postId}`;
     db.query(q, (err, res) => {
       if (err) throw err;
       resp.json(res);
@@ -36,7 +39,7 @@ module.exports = {
   },
   toggleLike: (req, res) => { // Add or remove a like
     const q = `DELETE FROM likes WHERE user_id=${req.user.github_id} 
-               AND post_id=${req.body.postId}`;
+      AND post_id=${req.body.postId}`;
     db.query(q, (err, res) => {
       if (err) throw err;
       //if the response indicates that no row was deleted, none existed, so created it

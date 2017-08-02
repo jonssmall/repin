@@ -1,2 +1,2 @@
 'use strict';
-//Test API
+//Test API, authenticated routes

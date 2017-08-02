@@ -1,4 +1,3 @@
-// TODO: export
 const ajax = (verb, url, body, successCallback) => {
   const xhr = new XMLHttpRequest();
   xhr.open(verb, `${url}`);
