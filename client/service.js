@@ -1,4 +1,5 @@
-const client = {
+import {ajax} from './ajax';
+export default {
   getPosts: () => {
     ajax("GET", "/posts/", null, (res) => {
       console.log(res);

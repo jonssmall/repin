@@ -19,3 +19,7 @@ const ajax = (verb, url, body, successCallback) => {
 };
 
 //todo: test async / await with babel 7
+
+export {
+  ajax
+}
