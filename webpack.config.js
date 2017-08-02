@@ -3,7 +3,7 @@ module.exports = {
         `${__dirname}/client/app.js`
     ],
     output: {
-        path: `${__dirname}/client`,
+        path: `${__dirname}/client/dist`,
         filename: "index.js"
     },
     module: {

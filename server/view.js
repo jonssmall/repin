@@ -9,12 +9,11 @@ module.exports = (user) => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">								
   </head>
   <body>
-    Hello.
-    <a href="/auth/github">Login</a>        
+    <div id="app"></div> 
     <script type="text/javascript" charset="utf-8">
       window.USER = ${JSON.stringify(user)};					
     </script>
-    <script type="text/javascript" charset="utf-8" src="/client/index.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/client/dist/index.js"></script>
   </body>
   </html>
   `;

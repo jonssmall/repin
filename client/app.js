@@ -1,32 +1,11 @@
-//TODO: stash ajax in library, require via webpack.
-const ajax = (verb, url, body, successCallback) => {
-  const xhr = new XMLHttpRequest();
-  xhr.open(verb, `${url}`);
-  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-  xhr.send(JSON.stringify(body));
+'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Routes from './routes';
 
-  xhr.onreadystatechange = () => {
-    const DONE = 4;
-    const OK = 200; 
-    if (xhr.readyState === DONE) {
-      if (xhr.status === OK) {        
-        successCallback(xhr.responseText);
-      } else {
-        console.log('Error: ' + xhr.status);
-      }
-    }
-  };
-}
+ReactDOM.render(
+  <Routes />,  
+  document.getElementById('app')
+);
 
-const client = {
-  getPosts: () => {
-    ajax("GET", "/posts/", null, (res) => {
-      console.log(res);
-    });
-  },
-  newPost: (picUrl, description) => {
-    ajax("POST", "/posts/", {picUrl, description}, (res) => {
-      console.log(res);
-    });
-  }
-}
+//TODO: webpack is almost 1mb!!!
