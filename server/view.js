@@ -14,7 +14,7 @@ module.exports = (user) => {
     <script type="text/javascript" charset="utf-8">
       window.USER = ${JSON.stringify(user)};					
     </script>
-    <script type="text/javascript" charset="utf-8" src="/client/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/client/index.js"></script>
   </body>
   </html>
   `;
