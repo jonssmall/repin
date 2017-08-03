@@ -5,12 +5,17 @@ import {
   Route,  
   Link    
 } from 'react-router-dom';
-import Posts from './Posts/main';
+import Posts from './Posts/allPosts';
+import UserPosts from './Posts/userPosts';
+import NewPost from './Posts/newPosts';
 const PinRouter = () => (  
   <Router>
     <div>
       {AuthButton}
+      <NewPost />
       <Route path="/" component={Posts}/>
+      {/* TODO: NOT WORKING */}
+      <Route path="/hi" component={UserPosts}/>
     </div>
   </Router>
 );

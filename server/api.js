@@ -14,15 +14,16 @@ module.exports = {
   newPost: (req, resp) => {
     const post  = {
       owner_id: req.user.github_id,
-      picture_url: req.body.picUrl,
+      picture_url: req.body.url,
       description: req.body.description
-    };      
+    };    
     db.query('INSERT INTO posts SET ?', post, (err, res) => {
       if (err) throw err;
       resp.json(res);
     });    
   },
   deletePost: (req, resp) => {
+    // TODO: how to communicate the failure to delete a different user's posts
     const q = `DELETE FROM posts WHERE owner_id=${req.user.github_id} 
       AND post_id=${req.body.postId}`;
     db.query(q, (err, res) => {
@@ -37,13 +38,13 @@ module.exports = {
       resp.json(res);
     });
   },
-  toggleLike: (req, res) => { // Add or remove a like
+  toggleLike: (req, res) => {
     const q = `DELETE FROM likes WHERE user_id=${req.user.github_id} 
       AND post_id=${req.body.postId}`;
     db.query(q, (err, res) => {
       if (err) throw err;
       //if the response indicates that no row was deleted, none existed, so created it
-      // TOOD: determine successful response
+      // TODO: determine successful response
       if (res[0].status == "OK") {
         resp.json(res);
       } else {
