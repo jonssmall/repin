@@ -15,9 +15,9 @@ const PinRouter = () => (
       {AuthButton}
       <NewPost />
       <Switch>
-        <Route path="/users/:name" component={UserPosts}/>      
-        <Route path="/" component={Posts}/>                    
-      </Switch>      
+        <Route path="/users/:name" component={UserPosts}/>
+        <Route path="/" component={Posts}/>
+      </Switch>
     </div>
   </Router>
 );

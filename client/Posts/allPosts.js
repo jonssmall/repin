@@ -9,7 +9,12 @@ class PostsContainer extends React.Component {
     this.deletePost = this.deletePost.bind(this);
   };
   toggleLike(id) {
-    console.log(id);
+    service.toggleLike(id, res => {      
+      const posts = this.state.posts.map(p => {
+        return p.id != id ? p : {...p, likes: p.likes + JSON.parse(res)};
+      });
+      this.setState({posts});
+    });
   };
   deletePost(id) {
     service.deletePost(id, res => {     
@@ -47,10 +52,13 @@ function Post(props) {
   const deleteButton = window.USER && props.author === window.USER.username ? 
     <button onClick={props.deleteHandler.bind(null, props.id)}>Delete</button>
     : null;
+  const likeButton = window.USER ? 
+    <button onClick={props.likeHandler.bind(null, props.id)}>Likes: {props.likes}</button>
+    : null;
   return (
     <div>
       {props.id}, {props.picture_url}, {props.description}, {props.author}, {props.profile_pic_url}
-      <button onClick={props.likeHandler.bind(null, props.id)}>Likes: {props.likes}</button>
+      {likeButton}
       {deleteButton}
     </div>
   );
