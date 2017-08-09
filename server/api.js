@@ -31,8 +31,11 @@ module.exports = {
       resp.json(res);
     });
   },
-  getUserPosts: (req, resp) => {
-    const q = `SELECT * FROM posts WHERE owner_id=${req.params.userId}`;
+
+  getUserPosts: (req, resp) => {    
+    const q = `SELECT * FROM posts      
+      INNER JOIN users ON posts.owner_id = users.github_id
+      WHERE users.username = '${req.params.userName}'`    
     db.query(q, (err, res) => {
       if (err) throw err;
       resp.json(res);
