@@ -28,7 +28,7 @@ module.exports = {
       AND id=${req.params.id}`;
     db.query(q, (err, res) => {
       if (err) throw err;
-      resp.json(res);
+      resp.json(req.params.id);
     });
   },
 

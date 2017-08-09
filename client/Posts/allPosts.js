@@ -12,7 +12,9 @@ class PostsContainer extends React.Component {
     console.log(id);
   };
   deletePost(id) {
-    service.deletePost(id, res => console.log(res));
+    service.deletePost(id, res => {     
+      this.setState({posts: this.state.posts.filter(p => p.id != JSON.parse(res))});      
+    });
   };
   componentDidMount() {
     service.getPosts(posts => this.setState({posts: JSON.parse(posts)}));
@@ -23,7 +25,7 @@ class PostsContainer extends React.Component {
       posts: this.state.posts,
       toggleLike: this.toggleLike,
       deletePost: this.deletePost
-    };
+    };    
     return (
       <PostsList {...props} />
     );
@@ -41,7 +43,7 @@ function PostsList(props) {
   return <div>{posts}</div>
 };
 
-function Post(props) {  
+function Post(props) {
   const deleteButton = window.USER && props.author === window.USER.username ? 
     <button onClick={props.deleteHandler.bind(null, props.id)}>Delete</button>
     : null;
