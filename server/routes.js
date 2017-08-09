@@ -27,7 +27,7 @@ module.exports = (app, passport) => {
   app.route('/posts/:id')		
     .delete(isLoggedIn, api.deletePost)
     .put(isLoggedIn, api.toggleLike); // PUT a like OR remove a like on a post.    
-  app.route('/users/:user/posts')
+  app.route('/users/:userId/posts')
     .get(api.getUserPosts);
 
   function isLoggedIn (req, res, next) {		

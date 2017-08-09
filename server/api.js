@@ -32,7 +32,7 @@ module.exports = {
     });
   },
   getUserPosts: (req, resp) => {
-    const q = `SELECT * FROM posts WHERE owner_id=${req.body.ownerId}`;
+    const q = `SELECT * FROM posts WHERE owner_id=${req.params.userId}`;
     db.query(q, (err, res) => {
       if (err) throw err;
       resp.json(res);

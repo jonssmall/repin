@@ -1,9 +1,10 @@
 'use strict';
 import React from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,  
-  Link    
+  Link,
+  Switch
 } from 'react-router-dom';
 import Posts from './Posts/allPosts';
 import UserPosts from './Posts/userPosts';
@@ -13,9 +14,10 @@ const PinRouter = () => (
     <div>
       {AuthButton}
       <NewPost />
-      <Route path="/" component={Posts}/>
-      {/* TODO: NOT WORKING */}
-      <Route path="/hi" component={UserPosts}/>
+      <Switch>
+        <Route path="/users/:id" component={UserPosts}/>      
+        <Route path="/" component={Posts}/>                    
+      </Switch>      
     </div>
   </Router>
 );

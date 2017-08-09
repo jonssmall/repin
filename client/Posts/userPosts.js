@@ -1,16 +1,14 @@
-//TODO: Do i need this? What about filtering allPosts by github_id ???
 'use strict';
-import React from 'react';
+import PostsContainer from './allPosts';
 import service from '../service';
-class UserPostsContainer extends React.Component {
+class UserPostsContainer extends PostsContainer {
   constructor(props) {
     super(props);
-    this.state = {};    
+    this.state = {};
   };
-  render() {            
-    return (
-      <div>User Posts</div>
-    );
+  componentDidMount() {
+    console.log(this.props.match.params.id);
+    service.getUserPosts(this.props.match.params.id, posts => this.setState({posts: JSON.parse(posts)}));
   };
 };
 

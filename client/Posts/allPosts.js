@@ -16,7 +16,7 @@ class PostsContainer extends React.Component {
   };
   componentDidMount() {
     service.getPosts(posts => this.setState({posts: JSON.parse(posts)}));
-  };  
+  };
   render() {    
     if (!this.state.posts) return <div>Loading...</div>;
     const props = {
