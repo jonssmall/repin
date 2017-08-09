@@ -12,7 +12,7 @@ class PostsContainer extends React.Component {
     console.log(id);
   };
   deletePost(id) {
-    console.log(id);
+    service.deletePost(id, res => console.log(res));
   };
   componentDidMount() {
     service.getPosts(posts => this.setState({posts: JSON.parse(posts)}));

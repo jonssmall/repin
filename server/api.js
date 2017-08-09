@@ -25,7 +25,7 @@ module.exports = {
   deletePost: (req, resp) => {
     // TODO: how to communicate the failure to delete a different user's posts
     const q = `DELETE FROM posts WHERE owner_id=${req.user.github_id} 
-      AND post_id=${req.body.postId}`;
+      AND id=${req.params.id}`;
     db.query(q, (err, res) => {
       if (err) throw err;
       resp.json(res);

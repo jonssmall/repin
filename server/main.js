@@ -8,7 +8,7 @@ const session = require('express-session');
 const app = express();
 const router = express.Router({mergeParams: true});
 require('./auth')(passport);
-app.use(bodyParser.json());
+app.use(bodyParser.json({strict:false}));
 app.use('/client', express.static(process.cwd() + '/client'));
 app.use(router);
 app.use(session({
