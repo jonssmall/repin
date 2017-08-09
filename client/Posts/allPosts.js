@@ -41,12 +41,15 @@ function PostsList(props) {
   return <div>{posts}</div>
 };
 
-function Post(props) {    
+function Post(props) {  
+  const deleteButton = window.USER && props.author === window.USER.username ? 
+    <button onClick={props.deleteHandler.bind(null, props.id)}>Delete</button>
+    : null;
   return (
     <div>
       {props.id}, {props.picture_url}, {props.description}, {props.author}, {props.profile_pic_url}
       <button onClick={props.likeHandler.bind(null, props.id)}>Likes: {props.likes}</button>
-      <button onClick={props.deleteHandler.bind(null, props.id)}>Delete</button>
+      {deleteButton}
     </div>
   );
 };

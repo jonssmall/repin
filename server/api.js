@@ -33,7 +33,9 @@ module.exports = {
   },
 
   getUserPosts: (req, resp) => {    
-    const q = `SELECT * FROM posts      
+    const q = `SELECT id, picture_url, description,
+      (SELECT count(*) FROM likes WHERE post_id = posts.id) AS likes,
+      username AS author, profile_pic_url FROM posts
       INNER JOIN users ON posts.owner_id = users.github_id
       WHERE users.username = '${req.params.userName}'`    
     db.query(q, (err, res) => {

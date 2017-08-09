@@ -7,7 +7,7 @@ class UserPostsContainer extends PostsContainer {
     this.state = {};
   };
   componentDidMount() {    
-    service.getUserPosts(this.props.match.params.name, posts => this.setState({posts: JSON.parse(posts)}));
+    service.getUserPosts(this.props.match.params.name, posts => this.setState({posts: JSON.parse(posts)}));    
   };
 };
 
