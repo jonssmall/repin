@@ -21,9 +21,11 @@ class PostsContainer extends React.Component {
       this.setState({posts: this.state.posts.filter(p => p.id != JSON.parse(res))});      
     });
   };
-  addPost(posts) {    
-    this.setState({posts: JSON.parse(posts)});    
-  }
+  addPost(post) {
+    const posts = this.state.posts;
+    posts.push(JSON.parse(post)[0]);
+    this.setState({posts});
+  };
   componentDidMount() {
     service.getPosts(posts => this.setState({posts: JSON.parse(posts)}));
   };

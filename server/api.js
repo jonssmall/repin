@@ -23,7 +23,8 @@ module.exports = {
       const q = `SELECT id, picture_url, description, 
         (SELECT count(*) FROM likes WHERE post_id = posts.id) AS likes,
         username AS author, profile_pic_url FROM posts
-        INNER JOIN users ON posts.owner_id = users.github_id`;
+        INNER JOIN users ON posts.owner_id = users.github_id
+        WHERE posts.id=${res.insertId}`;
       db.query(q, (err, res) => {
         if (err) throw err;
         resp.json(res);
