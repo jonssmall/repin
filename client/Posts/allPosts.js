@@ -38,7 +38,7 @@ class PostsContainer extends React.Component {
     };    
     return (
       <div>
-        <NewPost addHandler={this.addPost} />
+        {window.USER ? <NewPost addHandler={this.addPost} /> : null}
         <PostsList {...props} />
       </div>
     );
