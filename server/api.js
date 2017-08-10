@@ -11,7 +11,7 @@ module.exports = {
       resp.json(res);
     });
   },
-  newPost: (req, resp) => {
+  newPost: (req, resp) => {    
     const post  = {
       owner_id: req.user.github_id,
       picture_url: req.body.url,
@@ -19,7 +19,15 @@ module.exports = {
     };    
     db.query('INSERT INTO posts SET ?', post, (err, res) => {
       if (err) throw err;
-      resp.json(res);
+      //todo: figure out limitations of 'this' to DRY out calling getPosts   
+      const q = `SELECT id, picture_url, description, 
+        (SELECT count(*) FROM likes WHERE post_id = posts.id) AS likes,
+        username AS author, profile_pic_url FROM posts
+        INNER JOIN users ON posts.owner_id = users.github_id`;
+      db.query(q, (err, res) => {
+        if (err) throw err;
+        resp.json(res);
+      });
     });    
   },
   deletePost: (req, resp) => {

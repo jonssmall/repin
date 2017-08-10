@@ -21,8 +21,7 @@ class NewPostContainer extends React.Component {
   handleSubmit() {        
     //console.log(this.state);
     service.newPost(this.state, res => {
-      console.log(res);
-      // todo: lift upward a call to GET the updated list into the posts container.
+      this.props.addHandler(res);      
     });
   };
   render() {         

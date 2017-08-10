@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import NewPost from './newPosts';
 import service from '../service';
 class PostsContainer extends React.Component {
   constructor(props) {
@@ -7,12 +8,11 @@ class PostsContainer extends React.Component {
     this.state = {};
     this.toggleLike = this.toggleLike.bind(this);
     this.deletePost = this.deletePost.bind(this);
+    this.addPost = this.addPost.bind(this);
   };
   toggleLike(id) {
     service.toggleLike(id, res => {      
-      const posts = this.state.posts.map(p => {
-        return p.id != id ? p : {...p, likes: p.likes + JSON.parse(res)};
-      });
+      const posts = this.state.posts.map(p => p.id != id ? p : {...p, likes: p.likes + JSON.parse(res)});
       this.setState({posts});
     });
   };
@@ -21,6 +21,9 @@ class PostsContainer extends React.Component {
       this.setState({posts: this.state.posts.filter(p => p.id != JSON.parse(res))});      
     });
   };
+  addPost(posts) {    
+    this.setState({posts: JSON.parse(posts)});    
+  }
   componentDidMount() {
     service.getPosts(posts => this.setState({posts: JSON.parse(posts)}));
   };
@@ -32,7 +35,10 @@ class PostsContainer extends React.Component {
       deletePost: this.deletePost
     };    
     return (
-      <PostsList {...props} />
+      <div>
+        <NewPost addHandler={this.addPost} />
+        <PostsList {...props} />
+      </div>
     );
   };
 };
