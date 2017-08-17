@@ -1,5 +1,6 @@
 'use strict';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import NewPost from './newPosts';
 import service from '../service';
 class PostsContainer extends React.Component {
@@ -56,20 +57,38 @@ function PostsList(props) {
   return <div>{posts}</div>
 };
 
-function Post(props) {
-  const deleteButton = window.USER && props.author === window.USER.username ? 
-    <button onClick={props.deleteHandler.bind(null, props.id)}>Delete</button>
-    : null;
-  const likeButton = window.USER ? 
-    <button onClick={props.likeHandler.bind(null, props.id)}>Likes: {props.likes}</button>
-    : null;
-  return (
-    <div>
-      {props.id}, {props.picture_url}, {props.description}, {props.author}, {props.profile_pic_url}
-      {likeButton}
-      {deleteButton}
-    </div>
-  );
-};
+class Post extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      picture_url: props.picture_url
+    };
+    this.sourceError = this.sourceError.bind(this);    
+  };
+  sourceError() {
+    this.setState({
+      picture_url: '/client/notFound.png'
+    });
+  };
+  render() {
+    const deleteButton = window.USER && this.props.author === window.USER.username ? 
+      <button onClick={this.props.deleteHandler.bind(null, this.props.id)}>Delete</button>
+      : null;
+    const likeButton = window.USER ? 
+      <button onClick={this.props.likeHandler.bind(null, this.props.id)}>Likes: {this.props.likes}</button>
+      : null;  
+    return (
+      <div>
+        <Link to={`/users/${this.props.author}`} >
+          <img className='profile-bubble' src={this.props.profile_pic_url} title={this.props.author}/>
+        </Link>
+        <img className='card-picture' src={this.state.picture_url} onError={this.sourceError}/>       
+        {this.props.description}
+        {likeButton}
+        {deleteButton}
+      </div>
+    );
+  };
+}
 
 export default PostsContainer;
