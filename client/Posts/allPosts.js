@@ -72,20 +72,25 @@ class Post extends React.Component {
   };
   render() {
     const deleteButton = window.USER && this.props.author === window.USER.username ? 
-      <button onClick={this.props.deleteHandler.bind(null, this.props.id)}>Delete</button>
+      <button className="button-error pure-button" onClick={this.props.deleteHandler.bind(null, this.props.id)}>Delete</button>
       : null;
-    const likeButton = window.USER ? 
-      <button onClick={this.props.likeHandler.bind(null, this.props.id)}>Likes: {this.props.likes}</button>
-      : null;  
+    const likeButton = 
+      <button disabled={!window.USER} className="button-success pure-button" onClick={this.props.likeHandler.bind(null, this.props.id)}>
+        Likes: {this.props.likes}
+      </button>      
     return (
-      <div>
+      <div className="pin-card">
         <Link to={`/users/${this.props.author}`} >
           <img className='profile-bubble' src={this.props.profile_pic_url} title={this.props.author}/>
         </Link>
-        <img className='card-picture' src={this.state.picture_url} onError={this.sourceError}/>       
+        <div>
+          <img className='card-picture' src={this.state.picture_url} onError={this.sourceError}/>
+        </div>        
         {this.props.description}
-        {likeButton}
-        {deleteButton}
+        <div className="button-tray">
+          {likeButton}
+          {deleteButton}
+        </div>
       </div>
     );
   };
