@@ -18,9 +18,11 @@ class PostsContainer extends React.Component {
     });
   };
   deletePost(id) {
-    service.deletePost(id, res => {     
-      this.setState({posts: this.state.posts.filter(p => p.id != JSON.parse(res))});      
-    });
+    if(confirm("Delete post?")) {
+      service.deletePost(id, res => {     
+        this.setState({posts: this.state.posts.filter(p => p.id != JSON.parse(res))});      
+      });
+    }
   };
   addPost(post) {
     const posts = this.state.posts;

@@ -31,8 +31,12 @@ class NewPostContainer extends React.Component {
     };  
     return (
       <div>
-        <input type="text" placeholder="Url" name="url" value={this.state.url} onChange={this.handleUpdate} />
-        <input type="text" placeholder="Description" name="description" value={this.state.description} onChange={this.handleUpdate} />
+        <div>          
+          <input type="text" placeholder="Url" name="url" value={this.state.url} onChange={this.handleUpdate} />
+        </div>
+        <div>          
+          <input type="text" placeholder="Description" name="description" value={this.state.description} onChange={this.handleUpdate} />
+        </div>        
         <button {...buttonAttrs}>New Post</button>            
       </div>
     )
